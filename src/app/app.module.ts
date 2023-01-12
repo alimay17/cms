@@ -3,16 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
-import { ContactDetailComponent } from './contact-detail/contact-detail.component';
+import { NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { ContactsComponent } from './contacts/contacts.component';
+import { ContactListComponent } from './contacts/contact-list/contact-list.component';
+import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ContactsComponent,
+    ContactListComponent,
     ContactDetailComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
