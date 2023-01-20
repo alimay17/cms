@@ -6,7 +6,7 @@ import { HeaderComponent } from './header.component';
 import { NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ContactsComponent } from './contacts/contacts.component';
-import { ContactListComponent } from './contacts/contact-list/contact-list.component';
+import { ContactListComponent } from './contacts/contact-item/contact-list/contact-list.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 import { ContactItemComponent } from './contacts/contact-item/contact-item.component';
 
