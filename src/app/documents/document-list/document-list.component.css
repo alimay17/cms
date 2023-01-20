@@ -1,0 +1,9 @@
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 28px;
+}
