@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Contact } from '../../contact.model';
+import { Contact } from '../contact.model';
 @Component({
   selector: 'cms-contact-list',
   templateUrl: './contact-list.component.html',
