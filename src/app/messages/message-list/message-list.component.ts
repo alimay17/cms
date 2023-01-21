@@ -28,4 +28,8 @@ export class MessageListComponent {
       'Wednesday Addams'
     )
   ]
+
+  onAddMessage(newMessage: Message) {
+    this.messages.push(newMessage);
+  }
 }
