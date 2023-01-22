@@ -1,14 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Document } from '../document.model';
+import {
+  Component,
+  EventEmitter,
+  Output
+} from '@angular/core';
+import {
+  Document
+} from '../document.model';
+
 @Component({
   selector: 'cms-document-list',
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.css']
 })
+
 export class DocumentListComponent {
-  
   // custom events
-  @Output() selectedDocumentEvent = new EventEmitter<Document>();
+  @Output() selectedDocumentEvent = new EventEmitter < Document > ();
 
   // properties
   // hard coded documents list
@@ -40,11 +47,10 @@ export class DocumentListComponent {
       'notes for math class',
       'https//:url.com',
       []
-    )         
+    )
   ];
 
   // methods
-
   onSelectedDocument(document: Document) {
     this.selectedDocumentEvent.emit(document);
   }

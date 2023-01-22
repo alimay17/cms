@@ -1,6 +1,8 @@
+// angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// internal imports
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
 import { NgModel } from '@angular/forms';

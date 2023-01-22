@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { Message } from '../message.model';
+import {
+  Component
+} from '@angular/core';
+import {
+  Message
+} from '../message.model';
 
 @Component({
   selector: 'cms-message-list',
@@ -8,6 +12,7 @@ import { Message } from '../message.model';
 })
 
 export class MessageListComponent {
+  // hard coded messages list
   messages: Message[] = [
     new Message(
       '001',
@@ -29,6 +34,7 @@ export class MessageListComponent {
     )
   ]
 
+  // methods
   onAddMessage(newMessage: Message) {
     this.messages.push(newMessage);
   }
