@@ -22,29 +22,29 @@ export class DocumentListComponent {
   documents: Document[] = [
     new Document(
       '1',
-      'Class List.docx',
+      'Class List',
       'List of classes for semester',
       'https//:url.com',
       []
     ),
     new Document(
       '2',
-      'References.txt',
-      'list of library references to look up',
+      'References',
+      'List of library references to look up',
       'https//:url.com',
       []
     ),
     new Document(
       '3',
-      'Job Schedule.pdf',
-      'my job schedule for next week',
+      'Job Schedule',
+      'My job schedule for next week',
       'https//:url.com',
       []
     ),
     new Document(
       '4',
-      'notes.docx',
-      'notes for math class',
+      'notes',
+      'Notes for math class',
       'https//:url.com',
       []
     )
