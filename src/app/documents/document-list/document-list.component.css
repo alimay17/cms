@@ -1,9 +1,15 @@
-.vertical-align {
-  display: flex;
-  align-items: center;
+.center-panel {
+  margin-left: auto;
+  margin-right: auto;
+  width: 38rem;
 }
 
-h2 {
+.title {
+  font-size: 2.5rem;
   font-weight: bold;
-  font-size: 28px;
+}
+
+.pad-left-right {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

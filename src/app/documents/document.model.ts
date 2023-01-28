@@ -5,5 +5,5 @@ export class Document {
     public description: string,
     public url: string,
     public children: Document[]
-  ){}
+  ) {}
 }
