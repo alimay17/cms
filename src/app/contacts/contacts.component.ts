@@ -23,5 +23,6 @@ export class ContactsComponent implements OnInit{
     )
   }
 
+  // properties
   selectedContact!: Contact;
 }

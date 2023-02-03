@@ -20,6 +20,7 @@ import { MessageListComponent } from './messages/message-list/message-list.compo
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ContactService } from './contacts/contact.service';
+import { DocumentService } from './documents/document.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ContactService } from './contacts/contact.service';
     BrowserModule,
     FormsModule
   ],
-  providers: [ContactService],
+  providers: [ContactService, DocumentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
