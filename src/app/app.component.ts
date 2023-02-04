@@ -1,6 +1,4 @@
-import {
-  Component
-} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'cms-root',
@@ -9,6 +7,7 @@ import {
 })
 
 export class AppComponent {
+  
   // properties
   title = 'cms';
   selectedFeature: string = 'documents';

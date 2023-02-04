@@ -1,13 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Output,
-  ViewChild
-} from '@angular/core';
-import {
-  Message
-} from '../message.model';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-edit',
@@ -15,15 +8,15 @@ import {
   styleUrls: ['./message-edit.component.css']
 })
 
-
 export class MessageEditComponent {
-  // custom binding and events
+  
+  // constructors
+  constructor(private messageService: MessageService){}
+  
+  // properties
   @ViewChild('subject') subjectRef!: ElementRef;
   @ViewChild('msgText') msgTextRef!: ElementRef;
-  @Output() newMessageEvent = new EventEmitter < Message > ();
-
-  // properties
-  currentSender = 'Alice Smith';
+  currentSender = '7'; // temp till implement login
 
   // methods
   onSendMessage() {
@@ -31,7 +24,7 @@ export class MessageEditComponent {
     const msgText = this.msgTextRef.nativeElement.value;
     const newMessage = new Message('971457', subject, msgText, this.currentSender);
     
-    this.newMessageEvent.emit(newMessage);
+    this.messageService.addMessage(newMessage)
   }
 
   onClear() {

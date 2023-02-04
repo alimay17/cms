@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 // internal imports
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
-import { NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
@@ -44,4 +43,4 @@ import { DropdownDirective } from './shared/dropdown.directive';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
