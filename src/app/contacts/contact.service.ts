@@ -12,7 +12,7 @@ export class ContactService {
   }
 
   // events
-  contactSelectedEvent = new EventEmitter<Contact>();
+  contactSelectedEvent = new EventEmitter <Contact>();
 
   // properties
   contacts: Contact[] = [];
@@ -23,7 +23,7 @@ export class ContactService {
   }
 
   getContact(id: string): Contact | null {
-    for (const contact of this.contacts){
+    for (const contact of this.contacts) {
       if (contact.id == id) {
         return contact;
       }

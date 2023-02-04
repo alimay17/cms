@@ -1,12 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output
-} from '@angular/core';
-import {
-  Contact
-} from '../contact.model';
+import { Component, EventEmitter, Input } from '@angular/core';
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-item',
@@ -15,5 +8,7 @@ import {
 })
 
 export class ContactItemComponent {
+
+  // properties
   @Input() contact!: Contact;
 }
