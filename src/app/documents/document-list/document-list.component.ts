@@ -9,8 +9,10 @@ import { DocumentService } from '../document.service';
 })
 
 export class DocumentListComponent implements OnInit {
+
   // constructors
-  constructor(private documentService: DocumentService){}
+  constructor(private documentService: DocumentService) {}
+
   ngOnInit() {
     this.documents = this.documentService.getDocuments();
   }

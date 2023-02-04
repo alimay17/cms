@@ -1,14 +1,7 @@
-import {
-  Directive,
-  HostBinding,
-  HostListener
-} from '@angular/core';
+import { Directive, HostBinding, HostListener } from '@angular/core';
 
-@Directive({
-  selector: '[cmsDropdown]'
-})
+@Directive({ selector: '[cmsDropdown]'})
 export class DropdownDirective {
-  constructor() {}
 
   // properties
   @HostBinding('class.open') isOpen = false;

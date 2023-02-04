@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 // internal imports
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
-import { NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
@@ -19,9 +18,6 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { DropdownDirective } from './shared/dropdown.directive';
-import { ContactService } from './contacts/contact.service';
-import { DocumentService } from './documents/document.service';
-import { MessageService } from './messages/message.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +40,7 @@ import { MessageService } from './messages/message.service';
     BrowserModule,
     FormsModule
   ],
-  providers: [ContactService, DocumentService, MessageService],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

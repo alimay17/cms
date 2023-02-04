@@ -1,11 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild
-} from '@angular/core';
-import {
-  Message
-} from '../message.model';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 
 @Component({
@@ -14,11 +8,10 @@ import { MessageService } from '../message.service';
   styleUrls: ['./message-edit.component.css']
 })
 
-
 export class MessageEditComponent {
+  
   // constructors
   constructor(private messageService: MessageService){}
-
   
   // properties
   @ViewChild('subject') subjectRef!: ElementRef;

@@ -1,9 +1,5 @@
-import {
-  Component, OnInit
-} from '@angular/core';
-import {
-  Message
-} from '../message.model';
+import { Component, OnInit } from '@angular/core';
+import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 
 @Component({
@@ -13,9 +9,11 @@ import { MessageService } from '../message.service';
 })
 
 export class MessageListComponent implements OnInit {
+  
   // constructors
   constructor(private messageService: MessageService){}
-  ngOnInit(): void {
+  
+  ngOnInit() {
     this.messages = this.messageService.getMessages();
     this.messageService.messageChangedEvent.subscribe(
       (newMessages: Message[]) => {
