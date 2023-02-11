@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { WinRefService } from 'src/app/win-ref.service';
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
 
@@ -13,12 +14,16 @@ export class DocumentDetailComponent implements OnInit{
 
   // properties
   document!: Document;
+  nativeWindow: any;
 
   // constructor
   constructor(
+    private windowRefService: WinRefService,
     private documentService: DocumentService,
     private route: ActivatedRoute
-  ){}
+  ){
+    this.nativeWindow = windowRefService.getNativeWindow();
+  }
 
   // implements
   ngOnInit(): void {
@@ -28,5 +33,11 @@ export class DocumentDetailComponent implements OnInit{
         this.document = this.documentService.getDocument(id)!;
       }
     )
+  }
+
+  onView() {
+    if(this.document.url) {
+      this.nativeWindow.open(this.document.url);
+    }
   }
 }
