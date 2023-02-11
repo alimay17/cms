@@ -10,10 +10,5 @@ export class AppComponent {
   
   // properties
   title = 'cms';
-  selectedFeature: string = 'documents';
-
-  // methods
-  switchView(selectedFeature: string) {
-    this.selectedFeature = selectedFeature;
-  }
+  
 }
