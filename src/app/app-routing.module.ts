@@ -1,13 +1,13 @@
 // angular 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
+// app imports
 import { ContactDetailComponent } from "./contacts/contact-detail/contact-detail.component";
 import { ContactEditComponent } from "./contacts/contact-edit/contact-edit.component";
 import { ContactsComponent } from "./contacts/contacts.component";
 import { DocumentDetailComponent } from "./documents/document-detail/document-detail.component";
 import { DocumentEditComponent } from "./documents/document-edit/document-edit.component";
-
-// app imports
 import { DocumentsComponent } from "./documents/documents.component";
 import { MessageListComponent } from "./messages/message-list/message-list.component";
 
