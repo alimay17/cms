@@ -36,6 +36,7 @@ export class DocumentDetailComponent implements OnInit{
     )
   }
 
+  //methods
   onView() {
     if(this.document.url) {
       this.nativeWindow.open(this.document.url);

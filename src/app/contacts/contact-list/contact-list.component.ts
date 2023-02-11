@@ -13,14 +13,16 @@ export class ContactListComponent implements OnInit {
   // constructors
   constructor(private contactService: ContactService) {}
   ngOnInit() {
+    this.contactService.contactChangedEvent.subscribe(
+      (contacts: Contact[]) => {
+        this.contacts = contacts;
+      }
+    )
+
     this.contacts = this.contactService.getContacts();
   }
 
   // properties
   contacts: Contact[] = [];
 
-  // methods
-  onSelected(contact: Contact) {
-    this.contactService.contactSelectedEvent.emit(contact);
-  }
 }
