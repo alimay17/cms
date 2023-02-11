@@ -10,18 +10,15 @@ import { DocumentService } from '../document.service';
 
 export class DocumentListComponent implements OnInit {
 
+  // properties
+  documents: Document[] = []
+
   // constructors
   constructor(private documentService: DocumentService) {}
 
+  // implements
   ngOnInit() {
     this.documents = this.documentService.getDocuments();
   }
 
-  // properties
-  documents: Document[] = []
-
-  // methods
-  onSelectedDocument(document: Document) {
-    this.documentService.documentSelectedEvent.emit(document);
-  }
 }
