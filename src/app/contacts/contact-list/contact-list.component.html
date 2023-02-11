@@ -5,15 +5,14 @@
         <h2 class="panel-title">Contacts</h2>
       </div>
       <div class="col-sm-6 text-right">
-        <button class="btn btn-success">New Contact</button>
+        <a routerLink="new" class="btn btn-success">New Contact</a>
       </div>
     </div>
   </div>
   <div class="panel-body">
     <cms-contact-item 
       *ngFor="let contactItem of contacts" 
-      [contact]="contactItem" 
-      (click)="onSelected(contactItem)">
+      [contact]="contactItem">
     </cms-contact-item>
   </div>
 </div>

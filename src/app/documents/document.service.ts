@@ -6,17 +6,17 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
   providedIn: 'root'
 })
 export class DocumentService {
-  
+
+  // properties
+  documents: Document[] = [];
+
+  // events
+  documentChangedEvent = new EventEmitter <Document[]> ();
+
   // constructors
   constructor() {
     this.documents = MOCKDOCUMENTS;
   }
-
-  // events
-  documentSelectedEvent = new EventEmitter<Document>();
-
-  // properties
-  documents: Document[] = [];
 
   // methods
   getDocuments(): Document[] {
@@ -25,10 +25,22 @@ export class DocumentService {
 
   getDocument(id: string): Document | null {
     for (const document of this.documents) {
-      if(document.id == id) {
+      if (document.id == id) {
         return document;
       }
     };
     return null;
   }
+
+  deleteDocument(document: Document) {
+    if (!document) {
+       return;
+    }
+    const pos = this.documents.indexOf(document);
+    if (pos < 0) {
+       return;
+    }
+    this.documents.splice(pos, 1);
+    this.documentChangedEvent.emit(this.documents.slice());
+ }
 }

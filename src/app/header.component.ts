@@ -1,17 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'cms-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./app.component.css']
 })
 
 export class HeaderComponent {
 
-  // events
-  @Output() selectedFeatureEvent = new EventEmitter<string>();
-
-  // methods
-  onSelected(selectedEvent: string) {
-    this.selectedFeatureEvent.emit(selectedEvent);
-  }
 }
