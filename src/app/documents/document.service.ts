@@ -15,13 +15,15 @@ export class DocumentService {
   // events
   documentListChangedEvent = new Subject < Document[] > ();
 
-  // constructors
+  // constructor
   constructor() {
     this.documents = MOCKDOCUMENTS;
     this.maxDocumentId = this.getMaxId();
   }
 
   // methods
+
+  // getters
   getDocuments(): Document[] {
     return this.documents.slice();
   }
@@ -35,6 +37,7 @@ export class DocumentService {
     return null;
   }
 
+  // Create Update Delete
   addDocument(newDocument: Document) {
     if (!newDocument) {
       return;
