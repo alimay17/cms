@@ -10,13 +10,15 @@ export class DocumentService {
 
   // properties
   documents: Document[] = [];
+  maxDocumentId: number;
 
   // events
-  documentListChangedEvent = new Subject<Document[]>();
+  documentListChangedEvent = new Subject < Document[] > ();
 
   // constructors
   constructor() {
     this.documents = MOCKDOCUMENTS;
+    this.maxDocumentId = this.getMaxId();
   }
 
   // methods
@@ -33,15 +35,55 @@ export class DocumentService {
     return null;
   }
 
+  addDocument(newDocument: Document) {
+    if (!newDocument) {
+      return;
+    }
+    this.maxDocumentId++;
+    newDocument.id = this.maxDocumentId.toString();
+
+    this.documents.push(newDocument);
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    let pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) {
+      return;
+    }
+
+    newDocument.id = originalDocument.id;
+    this.documents[pos] = newDocument;
+
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
   deleteDocument(document: Document) {
     if (!document) {
-       return;
+      return;
     }
+
     const pos = this.documents.indexOf(document);
     if (pos < 0) {
-       return;
+      return;
     }
     this.documents.splice(pos, 1);
     this.documentListChangedEvent.next(this.documents.slice());
- }
+  }
+
+  // internal helper methods
+  private getMaxId(): number {
+    let maxId = 0;
+    this.documents.forEach(document => {
+      let currentId = +document.id;
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
+    });
+    return maxId;
+  }
 }
