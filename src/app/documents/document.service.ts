@@ -1,4 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
@@ -9,16 +10,20 @@ export class DocumentService {
 
   // properties
   documents: Document[] = [];
+  maxDocumentId: number;
 
   // events
-  documentChangedEvent = new EventEmitter <Document[]> ();
+  documentListChangedEvent = new Subject < Document[] > ();
 
-  // constructors
+  // constructor
   constructor() {
     this.documents = MOCKDOCUMENTS;
+    this.maxDocumentId = this.getMaxId();
   }
 
   // methods
+
+  // getters
   getDocuments(): Document[] {
     return this.documents.slice();
   }
@@ -32,15 +37,56 @@ export class DocumentService {
     return null;
   }
 
+  // Create Update Delete
+  addDocument(newDocument: Document) {
+    if (!newDocument) {
+      return;
+    }
+    this.maxDocumentId++;
+    newDocument.id = this.maxDocumentId.toString();
+
+    this.documents.push(newDocument);
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    let pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) {
+      return;
+    }
+
+    newDocument.id = originalDocument.id;
+    this.documents[pos] = newDocument;
+
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
   deleteDocument(document: Document) {
     if (!document) {
-       return;
+      return;
     }
+
     const pos = this.documents.indexOf(document);
     if (pos < 0) {
-       return;
+      return;
     }
     this.documents.splice(pos, 1);
-    this.documentChangedEvent.emit(this.documents.slice());
- }
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
+  // internal helper methods
+  private getMaxId(): number {
+    let maxId = 0;
+    this.documents.forEach(document => {
+      let currentId = +document.id;
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
+    });
+    return maxId;
+  }
 }
