@@ -63,6 +63,6 @@ export class DocumentEditComponent implements OnInit {
   }
 
   onCancel() {
-
+    this.router.navigate(['/documents']);
   }
 }

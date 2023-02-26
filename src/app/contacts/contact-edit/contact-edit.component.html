@@ -1,10 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <form id="contact-edit">
+    <form id="contact-edit" #f="ngForm" (ngSubmit)="onSubmit(f)">
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Name:</label>
           <input
+            required
+            [ngModel]="contact.name"
+            #name="ngModel"
+            name="name"
             type="text"
             id="name"
             class="form-control required"
@@ -17,11 +21,21 @@
         <div class="col-sm-12 form-group">
           <label for="email">Email:</label>
           <input
+            required
+            [ngModel]="contact.email"
+            #email="ngModel"
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
             type="text"
             id="email"
             class="form-control required"
             size="120"
             max="255">
+          <div
+            *ngIf="email.invalid && email.touched" 
+            class="alert alert-danger">
+            Please enter a valid email
+          </div>
         </div>
       </div>
 
@@ -29,12 +43,20 @@
         <div class="col-sm-12 form-group">
           <label for="phone">Phone:</label>
           <input
+            [ngModel]="contact.phone"
+            #phone="ngModel"
+            name="phone"
+            pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
             type="text"
             id="phone"
             class="form-control invalid"
             size="150"
             max="255">
-
+          <div
+            *ngIf="!phone.valid && phone.touched"
+            class="alert alert-danger">
+            Please enter a valid phone number
+          </div>
         </div>
       </div>
 
@@ -42,6 +64,8 @@
         <div class="col-sm-12 form-group">
           <label for="imageUrl">Image URL:</label>
           <input
+            [ngModel]="contact.imageUrl"
+            name="imageUrl"
             type="text"
             id="imageUrl"
             class="form-control"
@@ -69,10 +93,22 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-sm-12">
+          <div 
+          class="alert alert-danger"
+          *ngIf="!f.valid || !f.valid">
+          The Name and Email are required
+        </div>
+        </div>
+    </div>
 
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit">Save</button>
+          <button 
+            [disabled]="!f.valid"
+            class="btn btn-success" 
+            type="submit">Save</button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </div>
