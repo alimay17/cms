@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-edit',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class ContactEditComponent {
 
+  // properties
+  groupContacts!: Contact[];
+
+  // methods
+  onRemoveItem(item: number){
+    
+  }
+
+  onCancel(){
+
+  }
 }
