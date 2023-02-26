@@ -50,9 +50,9 @@
       <div class="row">
           <div class="col-sm-12">
             <div 
-            class="alert alert-danger"
-            *ngIf="!name.valid || !url.valid">
-            The Document Title and Document URL are required fields
+              class="alert alert-danger"
+              *ngIf="!name.valid || !url.valid">
+              The Document Title and Document URL are required fields
           </div>
           </div>
       </div>
@@ -63,11 +63,13 @@
             [disabled]="!f.valid"
             class="btn btn-success" 
             type="submit">Save</button>
-          <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+          <button 
+            (click)="onCancel()"
+            class="btn btn-primary" 
+            type="button">Cancel</button>
         </div>
       </div>
-
+      
     </form>
-
   </div>
 </div>

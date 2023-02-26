@@ -18,7 +18,6 @@ export class ContactEditComponent implements OnInit{
   editMode: boolean = false;
   id!: string;
 
-
   constructor(
     private contactService: ContactService,
     private router: Router,
@@ -44,8 +43,7 @@ export class ContactEditComponent implements OnInit{
         if(this.contact.group){
           this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group));
         }
-      }
-    )
+    });
   }
 
   // methods
