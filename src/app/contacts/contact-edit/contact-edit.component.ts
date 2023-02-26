@@ -69,11 +69,39 @@ export class ContactEditComponent implements OnInit{
     this.router.navigate(['/contacts']);
   }
 
-  onRemoveItem(item: number){
-    
-  }
-
   onCancel(){
     this.router.navigate(['/contacts']);
+  }
+
+  // drag and drop helper methods
+  addToGroup($event: any){
+    const selectedContact: Contact = $event.dragData;
+    const invalidGroupContact = this.isInvalidContact(selectedContact);
+    if(invalidGroupContact){
+      return;
+    }
+    this.groupContacts.push(selectedContact);
+  }
+
+  onRemoveItem(index: number){
+    if(index < 0 || index > this.groupContacts.length) {
+      return;
+    } 
+    this.groupContacts.splice(index, 1);
+  }
+
+  isInvalidContact(newContact: Contact): boolean{
+    if(!newContact) {
+      return true;
+    }
+    if(this.contact && newContact.id === this.contact.id){
+      return true;
+    }
+    for (let i = 0; i < this.groupContacts.length; i++){
+      if (newContact.id === this.groupContacts[i].id){
+        return true;
+      }
+    }
+    return false;
   }
 }
