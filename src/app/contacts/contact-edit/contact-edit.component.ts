@@ -68,7 +68,7 @@ export class ContactEditComponent implements OnInit{
   }
 
   onCancel(){
-    this.router.navigate(['/contacts']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   // drag and drop helper methods
