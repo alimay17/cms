@@ -1,6 +1,7 @@
 // angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {DndModule} from 'ng2-dnd';
 
 // internal imports
 import { AppComponent } from './app.component';
@@ -45,7 +46,8 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DndModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
