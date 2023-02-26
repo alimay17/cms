@@ -13,7 +13,7 @@ export class ContactEditComponent implements OnInit{
 
   // properties
   originalContact!: Contact;
-  contact: Contact;
+  contact: Contact = new Contact('','','','','',[]);
   groupContacts: Contact[] = [];
   editMode: boolean = false;
   id!: string;
@@ -23,9 +23,7 @@ export class ContactEditComponent implements OnInit{
     private contactService: ContactService,
     private router: Router,
     private route: ActivatedRoute
-  ){
-    this.contact = new Contact('','','','','',[]);
-  }
+  ){}
 
   //implements
   ngOnInit(): void {
