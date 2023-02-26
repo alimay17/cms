@@ -16,7 +16,7 @@ export class MessageEditComponent {
   // properties
   @ViewChild('subject') subjectRef!: ElementRef;
   @ViewChild('msgText') msgTextRef!: ElementRef;
-  currentSender = '7'; // temp till implement login
+  currentSender = '99'; // temp till implement login
 
   // methods
   onSendMessage() {
@@ -24,7 +24,8 @@ export class MessageEditComponent {
     const msgText = this.msgTextRef.nativeElement.value;
     const newMessage = new Message('971457', subject, msgText, this.currentSender);
     
-    this.messageService.addMessage(newMessage)
+    this.messageService.addMessage(newMessage);
+    this.onClear();
   }
 
   onClear() {
