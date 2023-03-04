@@ -13,6 +13,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   // properties
   contacts: Contact[] = [];
+  term: string = '';
 
   // events
   private subscription!: Subscription;
@@ -32,6 +33,12 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  //methods
+  search(value: string){
+    console.log(value);
+    this.term = value;
   }
 
 }

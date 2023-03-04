@@ -10,15 +10,19 @@ export class ContactsFilterPipe implements PipeTransform {
   transform(contacts: Contact[], term: string): any {
     let filtered: Contact[] = [];
 
-    filtered = contacts.filter((contact:Contact)=>{
-      contact.name.toLowerCase().includes(term.toLowerCase());
-    });
+    // filter list by term
+    if (term && term.length > 0) {
+      filtered = contacts.filter(
+         (contact:Contact) => contact.name.toLowerCase().includes(term.toLowerCase())
+      );
+    }
 
+    // return no result found
     if (filtered.length < 1){
       return contacts;
     }
 
+    // return search results
     return filtered;
   }
-
 }
