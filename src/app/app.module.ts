@@ -1,12 +1,13 @@
 // angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import {DndModule} from 'ng2-dnd';
 
 // internal imports
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
@@ -47,9 +48,10 @@ import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
+    DndModule.forRoot(),
     AppRoutingModule,
-    DndModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
