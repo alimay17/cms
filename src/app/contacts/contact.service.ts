@@ -18,7 +18,9 @@ export class ContactService {
   // constructor
   constructor(
     private httpClient: HttpClient
-  ) {}
+  ) {
+    this.getContacts();
+  }
 
   /*============ Server Connection Methods =============*/
   
@@ -31,7 +33,7 @@ export class ContactService {
       next: (contacts: Contact[]) => {
         // sort and assign to local contacts array
         this.contacts = contacts.sort((a: Contact, b: Contact) =>{
-          if(a < b) {
+          if(a.name < b.name) {
             return -1;
           } else if (a > b) {
             return 1;
@@ -73,6 +75,9 @@ export class ContactService {
 
   // get single contact by id
   getContact(id: string): Contact | null {
+    if(this.contacts.length < 1){
+      this.getContacts();
+    }
     for (const contact of this.contacts) {
       if (contact.id == id) {
         return contact;

@@ -20,9 +20,6 @@ export class DocumentService {
   constructor(
     private httpClient: HttpClient
   ) {}
-
-  // methods
-
   
   /*============ Server Connection Methods =============*/
 
@@ -31,7 +28,7 @@ export class DocumentService {
     const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
     // get document array from server
     this.httpClient.get<Document[]>(url).subscribe({
-      next: (documents: Document[]) =>{
+      next: (documents: Document[]) => {
 
         // sort and assign to local document array
         this.documents = documents.sort((a: Document, b: Document) =>{
@@ -42,7 +39,7 @@ export class DocumentService {
           } else {
             return 0;
           }
-        });;
+        });
 
         // assign maxId
         this.maxDocumentId = this.getMaxId();
@@ -66,9 +63,7 @@ export class DocumentService {
       url,
       putData,
       {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
       }
     ).subscribe(()=>{
       this.documentListChangedEvent.next(this.documents.slice());

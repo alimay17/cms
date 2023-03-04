@@ -10,6 +10,7 @@ import { Message } from '../message.model';
 })
 
 export class MessageItemComponent implements OnInit {
+  
 
   // constructors
   constructor(private contactService: ContactService) {}
@@ -18,6 +19,12 @@ export class MessageItemComponent implements OnInit {
     const contact: Contact | null = this.contactService.getContact(
       this.message.sender);
       this.messageSender = contact != null ? contact.name : '';
+
+    this.contactService.contactListChangedEvent.subscribe(() => {
+      const contact: Contact | null = this.contactService.getContact(
+        this.message.sender);
+      this.messageSender = contact != null ? contact.name : '';
+    })
   }
 
   // properties
