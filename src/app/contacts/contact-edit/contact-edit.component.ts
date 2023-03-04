@@ -62,7 +62,7 @@ export class ContactEditComponent implements OnInit{
     } else {
       this.contactService.addContact(newContact);
     }
-    this.router.navigate(['/contacts']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   onCancel(){
