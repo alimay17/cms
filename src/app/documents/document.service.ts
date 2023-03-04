@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +24,8 @@ export class DocumentService {
   // methods
 
   
-  /*=============================================
-  =          Server Connection Methods          =
-  =============================================*/
+  /*============ Server Connection Methods =============*/
+
   // get all documents from server
   getDocuments() {
     const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
@@ -80,9 +77,8 @@ export class DocumentService {
   }
 
   
-  /*=============================================
-  =         Local Document Manipulation         =
-  =============================================*/
+  /*========== Local Manipulation Methods ===========*/
+
   // single document by id
   getDocument(id: string): Document | null {
     for (const document of this.documents) {
