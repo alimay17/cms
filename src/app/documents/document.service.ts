@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +11,70 @@ export class DocumentService {
 
   // properties
   documents: Document[] = [];
-  maxDocumentId: number;
+  maxDocumentId: number = 0;
 
   // events
   documentListChangedEvent = new Subject < Document[] > ();
 
   // constructor
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  constructor(
+    private httpClient: HttpClient
+  ) {}
+  
+  /*============ Server Connection Methods =============*/
+
+  // get all documents from server
+  getDocuments() {
+    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
+    // get document array from server
+    this.httpClient.get<Document[]>(url).subscribe({
+      next: (documents: Document[]) => {
+
+        // sort and assign to local document array
+        this.documents = documents.sort((a: Document, b: Document) =>{
+          if(a < b) {
+            return -1;
+          } else if (a > b) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        // assign maxId
+        this.maxDocumentId = this.getMaxId();
+
+        // update subscription
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      // handle errors
+      error: (error:any) => {
+        console.log(error.message);
+      }
+    });
   }
 
-  // methods
+  // store all documents to server
+  storeDocuments(){
+    const putData = JSON.stringify(this.documents);
+    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
 
-  // getters
-  getDocuments(): Document[] {
-    return this.documents.slice();
+    this.httpClient.put(
+      url,
+      putData,
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
+      }
+    ).subscribe(()=>{
+      this.documentListChangedEvent.next(this.documents.slice());
+    })
+  
   }
 
+  
+  /*========== Local Manipulation Methods ===========*/
+
+  // single document by id
   getDocument(id: string): Document | null {
     for (const document of this.documents) {
       if (document.id == id) {
@@ -37,7 +84,7 @@ export class DocumentService {
     return null;
   }
 
-  // Create Update Delete
+  // Add new Document
   addDocument(newDocument: Document) {
     if (!newDocument) {
       return;
@@ -46,9 +93,10 @@ export class DocumentService {
     newDocument.id = this.maxDocumentId.toString();
 
     this.documents.push(newDocument);
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
+  // update selected document
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
@@ -62,9 +110,10 @@ export class DocumentService {
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
 
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
+  // deleted selected document
   deleteDocument(document: Document) {
     if (!document) {
       return;
@@ -75,7 +124,7 @@ export class DocumentService {
       return;
     }
     this.documents.splice(pos, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
   // internal helper methods

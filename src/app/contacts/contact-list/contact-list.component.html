@@ -4,14 +4,31 @@
       <div class="col-sm-6">
         <h2 class="panel-title">Contacts</h2>
       </div>
-      <div class="col-sm-6 text-right">
-        <a routerLink="new" class="btn btn-success">New Contact</a>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="input-group pull-left pad-left-right col-xs-7">
+          <input
+            #searchBox
+            (keyup)="search(searchBox.value)"
+            type="text"
+            placeholder="Enter a search value"
+            class="form-control">
+          <div 
+            (click)="search(searchBox.value)"
+            class="glyphicon glyphicon-search input-group-addon"
+            style="cursor:pointer">
+          </div>
+        </div>
+        <div class="pull-right pad-left-right">
+          <a routerLink="new" class="btn btn-success">New Contact</a>
+        </div>
       </div>
     </div>
   </div>
   <div class="panel-body">
     <cms-contact-item 
-      *ngFor="let contactItem of contacts"
+      *ngFor="let contactItem of contacts | contactsFilter:term"
       dnd-draggable
       [dragEnabled]="true"
       [dragData]="contactItem"
