@@ -37,7 +37,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   //methods
   search(value: string){
-    console.log(value);
     this.term = value;
   }
 
