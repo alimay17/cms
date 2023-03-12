@@ -23,14 +23,13 @@ export class MessageService {
 
   // get all message from server
   getMessages() {
-    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/messages.json';
+    const url = 'http://localhost:3000/messages';
 
     // get messages array from server
-    this.httpClient.get<Message[]>(url).subscribe({
-      next: (messages: Message[]) => {
-
+    this.httpClient.get<{message:string, content:Message[]}>(url).subscribe({
+      next: (response) => {
         // sort and assign to local messages array
-        this.messages = messages.sort((a: Message, b: Message) =>{
+        this.messages = response.content.sort((a: Message, b: Message) =>{
           if(a < b) {
             return -1;
           } else if (a > b) {

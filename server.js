@@ -9,12 +9,12 @@ var mongoose = require('mongoose');
 
 // import the routing file to handle the default (index) route
 var index = require('./server/routes/app');
-const documents = require('./server/routes/documents');
-const messages = require('./server/routes/messages');
-const contacts = require('./server/routes/contacts');
+const documentRoutes = require('./server/routes/documents');
+const messageRoutes = require('./server/routes/messages');
+const contactRoutes = require('./server/routes/contacts');
 
 // establish a connection to the mongo database
-mongoose.connect('mongodb://localhost:27017/cms',
+mongoose.connect('mongodb://127.0.0.1:27017/cms',
    { useNewUrlParser: true }, (err, res) => {
       if (err) {
          console.log('Connection failed: ' + err);
@@ -57,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 // Tell express to map the default route ('/') to the index route
 app.use('/', index);
 
+app.get('/messages', messageRoutes);
 
 
 // Tell express to map all other non-defined routes back to the index page
