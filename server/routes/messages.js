@@ -6,7 +6,8 @@ const Message = require('../models/message');
 // get messages
 router.get('/messages', (req, res, next) => {
 
-  Message.find().then(messages => {
+  Message.find().populate('name')
+  .then(messages => {
     // return results
     if (!messages) {
       res.status(500).json({
