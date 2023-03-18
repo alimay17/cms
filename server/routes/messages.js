@@ -6,7 +6,7 @@ const Message = require('../models/message');
 // get messages
 router.get('/messages', (req, res, next) => {
 
-  Message.find().populate('name')
+  Message.find()
   .then(messages => {
     // return results
     if (!messages) {
@@ -22,5 +22,7 @@ router.get('/messages', (req, res, next) => {
     }
   })
 });
+
+router.post
 
 module.exports = router;

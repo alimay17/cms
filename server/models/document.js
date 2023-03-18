@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 
 const documentSchema = mongoose.Schema({
   id: { type: String, required: true },
-  subject: { type: String },
-  msgText: { type: String, required: true },
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'Contact'}
+  name: { type: String, required: true },
+  url: { type: String },
+  children: [{
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    url: { type: String }
+  }]
 });
 
-module.exports = mongoose.model('Document', messageSchema);
+module.exports = mongoose.model('Document', documentSchema);
