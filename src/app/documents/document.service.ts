@@ -12,7 +12,7 @@ export class DocumentService {
   // properties
   documents: Document[] = [];
   maxDocumentId: number = 0;
-  private url = 'http://localhost:3000/documents';
+  private url = 'http://localhost:3000/api/documents';
 
   // events
   documentListChangedEvent = new Subject < Document[] > ();

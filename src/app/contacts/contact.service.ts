@@ -11,7 +11,7 @@ export class ContactService {
   // properties
   contacts: Contact[] = [];
   private maxContactId: number = 0;
-  private url = 'http://localhost:3000/contacts';
+  private url = 'http://localhost:3000/api/contacts';
 
   
   // events

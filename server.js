@@ -58,9 +58,9 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 app.use('/', index);
 
 // internal routing
-app.use('/messages', messageRoutes);
-app.use('/contacts', contactRoutes);
-app.use('/documents', documentRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/contacts', contactRoutes);
+app.use('/api/documents', documentRoutes);
 
 
 // Tell express to map all other non-defined routes back to the index page

@@ -10,7 +10,7 @@ export class MessageService {
   // properties
   messages: Message[] = [];
   private maxMessageId: number = 0;
-  private url = 'http://localhost:3000/messages';
+  private url = 'http://localhost:3000/api/messages';
 
   // events
   messageChangedEvent = new EventEmitter<Message[]>();
