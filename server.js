@@ -27,6 +27,18 @@ mongoose.connect('mongodb://127.0.0.1:27017/cms',
 
 var app = express(); // create an instance of express
 
+// connect to mongo db
+mongoose.connect('mongodb://127.0.0.1:27017/cms',
+   { useNewUrlParser: true }, (err, res) => {
+      if (err) {
+         console.log('Connection failed: ' + err);
+      }
+      else {
+         console.log('Connected to database!');
+      }
+   }
+);
+
 // Tell express to use the following parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -57,7 +69,10 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 // Tell express to map the default route ('/') to the index route
 app.use('/', index);
 
-app.get('/messages', messageRoutes);
+// internal routing
+app.use('/messages', messageRoutes);
+app.use('/contacts', contactRoutes);
+app.use('/documents', documentRoutes);
 
 
 // Tell express to map all other non-defined routes back to the index page
