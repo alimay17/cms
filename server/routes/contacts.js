@@ -21,10 +21,10 @@ router.get('/', (req, res, next) => {
 
 // post new contact
 router.post('/', (req, res, next) => {
-  const maxDocumentId = sequenceGenerator.nextId("contacts");
+  const maxContactId = sequenceGenerator.nextId("contacts");
 
   const contact = new Contact({
-    id: maxDocumentId,
+    id: maxContactId,
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,

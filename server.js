@@ -13,18 +13,6 @@ const documentRoutes = require('./server/routes/documents');
 const messageRoutes = require('./server/routes/messages');
 const contactRoutes = require('./server/routes/contacts');
 
-// establish a connection to the mongo database
-mongoose.connect('mongodb://127.0.0.1:27017/cms',
-   { useNewUrlParser: true }, (err, res) => {
-      if (err) {
-         console.log('Connection failed: ' + err);
-      }
-      else {
-         console.log('Connected to database!');
-      }
-   }
-);
-
 var app = express(); // create an instance of express
 
 // connect to mongo db
