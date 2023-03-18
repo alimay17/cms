@@ -27,7 +27,8 @@ export class DocumentService {
   // get all documents from server
   getDocuments() {
     // get document array from server
-    this.httpClient.get<{message:string, content:Document[]}>(this.url).subscribe({
+    this.httpClient.get<{message:string, content:Document[]}>(this.url)
+    .subscribe({
       next: (response) => {
         this.documents = response.content;
         this.sortAndSend();
@@ -123,18 +124,6 @@ export class DocumentService {
       }
     };
     return null;
-  }
-
-  // internal helper methods
-  private getMaxId(): number {
-    let maxId = 0;
-    this.documents.forEach(document => {
-      let currentId = +document.id;
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    });
-    return maxId;
   }
 
   // sort documents list and update event listener
