@@ -12,6 +12,7 @@ export class DocumentService {
   // properties
   documents: Document[] = [];
   maxDocumentId: number = 0;
+  private url = 'http://localhost:3000/documents';
 
   // events
   documentListChangedEvent = new Subject < Document[] > ();
@@ -25,27 +26,11 @@ export class DocumentService {
 
   // get all documents from server
   getDocuments() {
-    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
     // get document array from server
-    this.httpClient.get<Document[]>(url).subscribe({
-      next: (documents: Document[]) => {
-
-        // sort and assign to local document array
-        this.documents = documents.sort((a: Document, b: Document) =>{
-          if(a < b) {
-            return -1;
-          } else if (a > b) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        // assign maxId
-        this.maxDocumentId = this.getMaxId();
-
-        // update subscription
-        this.documentListChangedEvent.next(this.documents.slice());
+    this.httpClient.get<{message:string, content:Document[]}>(this.url).subscribe({
+      next: (response) => {
+        this.documents = response.content;
+        this.sortAndSend();
       },
       // handle errors
       error: (error:any) => {
@@ -54,25 +39,81 @@ export class DocumentService {
     });
   }
 
-  // store all documents to server
-  storeDocuments(){
-    const putData = JSON.stringify(this.documents);
-    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/documents.json';
+  // Add new Document
+  addDocument(newDocument: Document) {
+    if (!newDocument) {
+      return;
+    }
+    newDocument.id = '';
 
-    this.httpClient.put(
-      url,
-      putData,
-      {
-        headers: new HttpHeaders({'Content-Type': 'application/json'})
-      }
-    ).subscribe(()=>{
-      this.documentListChangedEvent.next(this.documents.slice());
-    })
-  
+    // add to database
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.httpClient.post<{ message: string, document: Document }>(
+      this.url,
+      newDocument,
+      { headers: headers })
+      .subscribe(
+        (response) => {
+          // update local documents
+          this.documents.push(response.document);
+          this.sortAndSend();
+        }
+      );
+  }
+
+  // update selected document
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    // set document position
+    const pos = this.documents.findIndex(d => d.id === originalDocument.id);
+    if (pos < 0) {
+      return;
+    }
+
+    // set id
+    newDocument.id = originalDocument.id;
+
+    // update database
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.httpClient.put(this.url + '/' + originalDocument.id,
+      newDocument, { headers: headers })
+      .subscribe(
+        (response) => {
+          // update local documents 
+          this.documents[pos] = newDocument;
+          this.sortAndSend();
+        }
+      );
+  }
+
+  // deleted selected document
+  deleteDocument(document: Document) {
+    if (!document) {
+      return;
+    }
+
+    // get array position
+    const pos = this.documents.findIndex(d => d.id === document.id);
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.httpClient.delete(this.url +'/' + document.id)
+      .subscribe(
+        (response) => {
+          // update local documents array
+          this.documents.splice(pos, 1);
+          this.sortAndSend();
+        }
+      );
   }
 
   
-  /*========== Local Manipulation Methods ===========*/
+  /*========== internal helper methods ===========*/
 
   // single document by id
   getDocument(id: string): Document | null {
@@ -82,49 +123,6 @@ export class DocumentService {
       }
     };
     return null;
-  }
-
-  // Add new Document
-  addDocument(newDocument: Document) {
-    if (!newDocument) {
-      return;
-    }
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-
-    this.documents.push(newDocument);
-    this.storeDocuments();
-  }
-
-  // update selected document
-  updateDocument(originalDocument: Document, newDocument: Document) {
-    if (!originalDocument || !newDocument) {
-      return;
-    }
-
-    let pos = this.documents.indexOf(originalDocument);
-    if (pos < 0) {
-      return;
-    }
-
-    newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-
-    this.storeDocuments();
-  }
-
-  // deleted selected document
-  deleteDocument(document: Document) {
-    if (!document) {
-      return;
-    }
-
-    const pos = this.documents.indexOf(document);
-    if (pos < 0) {
-      return;
-    }
-    this.documents.splice(pos, 1);
-    this.storeDocuments();
   }
 
   // internal helper methods
@@ -137,5 +135,19 @@ export class DocumentService {
       }
     });
     return maxId;
+  }
+
+  // sort documents list and update event listener
+  private sortAndSend(){
+    this.documents.sort((a,b)=>{
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    this.documentListChangedEvent.next(this.documents.slice());
   }
 }
