@@ -16,7 +16,7 @@ export class MessageEditComponent {
   // properties
   @ViewChild('subject') subjectRef!: ElementRef;
   @ViewChild('msgText') msgTextRef!: ElementRef;
-  currentSender = '19'; // temp till implement login
+  currentSender = '101'; // temp till implement login
 
   // methods
   onSendMessage() {

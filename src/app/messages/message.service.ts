@@ -10,7 +10,8 @@ export class MessageService {
   // properties
   messages: Message[] = [];
   private maxMessageId: number = 0;
-  
+  private url = 'http://localhost:3000/api/messages';
+
   // events
   messageChangedEvent = new EventEmitter<Message[]>();
   
@@ -23,28 +24,14 @@ export class MessageService {
 
   // get all message from server
   getMessages() {
-    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/messages.json';
 
     // get messages array from server
-    this.httpClient.get<Message[]>(url).subscribe({
-      next: (messages: Message[]) => {
-
+    this.httpClient.get<{message:string, content:Message[]}>(this.url)
+    .subscribe({
+      next: (response) => {
         // sort and assign to local messages array
-        this.messages = messages.sort((a: Message, b: Message) =>{
-          if(a < b) {
-            return -1;
-          } else if (a > b) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        // update max id
-        this.maxMessageId = this.getMaxId();
-
-        // update subscription
-        this.messageChangedEvent.next(this.messages.slice());
+        this.messages = response.content;
+        this.sortAndSend();
       },
        
       // handle errors
@@ -54,46 +41,65 @@ export class MessageService {
     });
   }
 
-  // store all messages on server
-  storeMessages() {
-    const putData = JSON.stringify(this.messages);
-    const url = 'https://angular-cms-wdd430-default-rtdb.firebaseio.com/messages.json';
+  // Add new Document
+  addMessage(newMessage: Message) {
+    if (!newMessage) {
+      return;
+    }
+    newMessage.id = '';
 
-    this.httpClient.put(
-      url,
-      putData,
-      {
-        headers: new HttpHeaders({'Content-Type': 'application/json'})
-      }
-    ).subscribe(()=>{
-      this.messageChangedEvent.next(this.messages.slice());
-    })
+    // add to database
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.httpClient.post<{ message: string, myMessage: Message }>(
+      this.url,
+      newMessage,
+      { headers: headers })
+      .subscribe(
+        (response) => {
+          // update local documents
+          this.messages.push(response.myMessage);
+          this.sortAndSend();
+        }
+      );
+  }
+
+  // deleted selected document
+  deleteMessage(message: Message) {
+    if (!message) {
+      return;
+    }
+
+    // get array position
+    const pos = this.messages.findIndex(m => m.id === message.id);
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.httpClient.delete(this.url +'/' + message.id)
+      .subscribe(
+        (response) => {
+          // update local documents array
+          this.messages.splice(pos, 1);
+          this.sortAndSend();
+        }
+      );
   }
 
 
   /*========== Local Manipulation Methods ===========*/
 
-  // add new message
-  addMessage(newMessage: Message) {
-    if(!newMessage){
-      return;
-    }
-    this.maxMessageId++;
-    newMessage.id = this.maxMessageId.toString()
-
-    this.messages.push(newMessage);
-    this.storeMessages();
-  }
-
-  // internal helper methods
-  private getMaxId(): number {
-    let maxId = 0;
-    this.messages.forEach(message => {
-      let currentId = + message.id;
-      if (currentId > maxId) {
-        maxId = currentId;
+  // sort documents list and update event listener
+  private sortAndSend(){
+    this.messages.sort((a,b)=>{
+      if (a.sender < b.sender) {
+        return -1;
       }
+      if (a.sender > b.sender) {
+        return 1;
+      }
+      return 0;
     });
-    return maxId;
+    this.messageChangedEvent.next(this.messages.slice());
   }
 }
